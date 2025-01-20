@@ -50,6 +50,7 @@ namespace IdentityApi
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+                options.Authority = null;
             });
         }
 

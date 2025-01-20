@@ -18,7 +18,7 @@
         
         public static Token InvalidGrantType => new Token { UnauthorizedReason = "Invalid Grant Type" };
 
-        public static Token InvalidClient => new Token { UnauthorizedReason = "Invalid Client Id" };
+        public static Token InvalidClient => new Token { UnauthorizedReason = "Invalid Client Credentials" };
 
         public static Token InvalidUsernamePassword => new Token { UnauthorizedReason = "Invalid Username or Password" };
 

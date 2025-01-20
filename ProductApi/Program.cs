@@ -1,16 +1,22 @@
 using ProductApi.Repository;
 using ProductApi.Services;
+using SecurityModels;
+using ProductApi.Model;
+using LoggerModels;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 var services = builder.Services;
 
-builder.Logging.ConfigureAppLogger();
+builder.ConfigureAuthorization();
+builder.Services.AddSingleton<IAppLogger, AppLogger>();
+//builder.Logging.ConfigureAppLogger();
 services.AddAutoMapper(
     AppDomain.CurrentDomain.GetAssemblies());
 services.AddRepositoryContext();
-services.AddProductRepository();
+services.AddProductService();
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
@@ -35,6 +41,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

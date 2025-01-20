@@ -1,11 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.EntityFrameworkCore;
 using IdentityApi.ValueObject;
-using IdentityApi.Repository;
-using System.Security.Claims;
 using IdentityApi.Model;
-using System.Text;
 using AutoMapper;
 
 namespace IdentityApi.Services

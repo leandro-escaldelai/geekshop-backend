@@ -12,7 +12,7 @@ namespace ProductApi.Repository
         private readonly string _connectionString = configuration.GetConnectionString("database") 
             ?? throw new ArgumentException("database");
 
-        public DbSet<Product> Products { get; set; }
+        private readonly string schema = "Product";
 
 
 
@@ -29,11 +29,13 @@ namespace ProductApi.Repository
             ConfigureProduct(modelBuilder);
         }
 
-        private static void ConfigureProduct(ModelBuilder modelBuilder)
+
+
+        private void ConfigureProduct(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>(e =>
             {
-                e.ToTable("Product");
+                e.ToTable(nameof(Product), schema);
                 e.HasKey(e => e.Id);
                 e.Property(e => e.Id).ValueGeneratedOnAdd();
                 e.Property(e => e.Name).IsRequired().HasMaxLength(150);

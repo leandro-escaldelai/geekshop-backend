@@ -1,47 +1,27 @@
-using IdentityApi.Repository;
-using IdentityApi.Services;
 using IdentityApi;
 
-var builder = WebApplication.CreateBuilder(args);
+Console.WriteLine("Start API");
 
-// Add services to the container.
-var services = builder.Services;
+var builder = CreateHostBuilder(args);
+var host = builder.Build();
 
-builder.ConfigureAuthentication();
-builder.Logging.ConfigureAppLogger();
-services.AddAutoMapper(
-    AppDomain.CurrentDomain.GetAssemblies());
-services.AddRepositoryContext();
-services.AddLoginService();
-services.AddControllers();
-services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
-services.AddCors(options =>
+await host.StartAsync();
+await host.WaitForShutdownAsync();
+
+Console.WriteLine("End API");
+
+
+
+static IHostBuilder CreateHostBuilder(string[] args)
 {
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
-});
+	var builder = Host.CreateDefaultBuilder(args);
 
+	builder.ConfigureWebHostDefaults(ConfigureDefaults);
 
-
-// Configure the HTTP request pipeline.
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	return builder;
 }
-app.UseCors();
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
 
-
-
-
+static void ConfigureDefaults(IWebHostBuilder builder)
+{
+	builder.UseStartup<Startup>();
+}

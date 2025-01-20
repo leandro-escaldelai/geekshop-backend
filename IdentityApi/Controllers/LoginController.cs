@@ -11,14 +11,14 @@ namespace IdentityApi.Controllers
     [Route("[controller]")]
     public class LoginController(
         IMapper _mapper,
-        ILoginService _loginService) : Controller
+        ILoginService _service) : Controller
     {
 
         [HttpPost]
         [ProducesResponseType(typeof(TokenVO), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> PostLogin(LoginVO login)
         {
-            var result = await _loginService.Login(login);
+            var result = await _service.Login(login);
             var mResult = _mapper.Map<TokenVO>(result);
 
             return !string.IsNullOrEmpty(mResult.UnauthorizedReason)

@@ -12,7 +12,7 @@ namespace IdentityApi.Repository
         private readonly string _connectionString = configuration.GetConnectionString("database")
             ?? throw new ArgumentException("database");
 
-
+        private readonly string schema = "Identity";
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -41,6 +41,7 @@ namespace IdentityApi.Repository
         {
             modelBuilder.Entity<GrantType>(e =>
             {
+                e.ToTable(nameof(GrantType), schema);
                 e.HasKey(x => x.Id);
             });
         }
@@ -49,6 +50,7 @@ namespace IdentityApi.Repository
         {
             modelBuilder.Entity<Scope>(e =>
             {
+                e.ToTable(nameof(Scope), schema);
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
             });
@@ -58,6 +60,7 @@ namespace IdentityApi.Repository
         {
             modelBuilder.Entity<Client>(e =>
             {
+                e.ToTable(nameof(Client), schema);
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
             });
@@ -67,6 +70,7 @@ namespace IdentityApi.Repository
         {
             modelBuilder.Entity<ClientGrantType>(e =>
             {
+                e.ToTable(nameof(ClientGrantType), schema);
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.HasOne(x => x.Client)
@@ -80,6 +84,7 @@ namespace IdentityApi.Repository
         {
             modelBuilder.Entity<ClientScope>(e =>
             {
+                e.ToTable(nameof(ClientScope), schema);
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.HasOne(x => x.Client)
@@ -92,6 +97,7 @@ namespace IdentityApi.Repository
         {
             modelBuilder.Entity<User>(e =>
             {
+                e.ToTable(nameof(User), schema);
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
             });
@@ -101,6 +107,7 @@ namespace IdentityApi.Repository
         {
             modelBuilder.Entity<Role>(e =>
             {
+                e.ToTable(nameof(Role), schema);
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
             });
@@ -110,6 +117,7 @@ namespace IdentityApi.Repository
         {
             modelBuilder.Entity<UserRole>(e =>
             {
+                e.ToTable(nameof(UserRole), schema);
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Id).ValueGeneratedOnAdd();
                 e.HasOne(x => x.Client);
